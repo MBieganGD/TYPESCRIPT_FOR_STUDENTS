@@ -28,7 +28,7 @@ interface IRequest {
 
 interface IObserverHandlers {
   next?: (value: IRequest) => void;
-  error?: (value: any) => void;
+  error?: (value: Error) => void;
   complete?: () => void;
 }
 
@@ -46,7 +46,7 @@ class Observer {
     }
   }
 
-  error(error: any): void {
+  error(error: Error): void {
     if (!this.isUnsubscribed) {
       if (this.handlers.error) {
         this.handlers.error(error);
@@ -137,7 +137,7 @@ const handleRequest = (_request: IRequest) => {
   // handling of request
   return { status: HttpStatusCodes.HTTP_STATUS_OK };
 };
-const handleError = (_error: any) => {
+const handleError = (_error: Error) => {
   // handling of error
   return { status: HttpStatusCodes.HTTP_STATUS_INTERNAL_SERVER_ERROR };
 };
